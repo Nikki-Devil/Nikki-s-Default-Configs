@@ -1,0 +1,101 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "modules": [
+    "title",
+    "separator",
+    "os",
+    "host",
+    "kernel",
+    "uptime",
+    "packages",
+    "shell",
+    "display",
+    "de",
+    "wm",
+    "wmtheme",
+    "theme",
+    "icons",
+    "font",
+    "cursor",
+    "terminal",
+    "terminalfont",
+
+    {
+      "type": "cpu",
+      "temp": true
+    },
+    {
+      "type": "gpu",
+      "driverSpecific": true
+    },
+    {
+      "type": "command",
+      "key": "GPU Driver",
+      "text": "lspci -nnk | awk '/VGA compatible controller|3D controller|Display controller/ {gpu=1} gpu && /Kernel driver in use:/ {sub(/^.*Kernel driver in use: /, \"\"); print; found=1; exit} END {if (!found) print \"N/A\"}'",
+      "useOutput": "stdout"
+    },
+
+    "memory",
+    "swap",
+
+    {
+      "type": "disk",
+      "folders": "/:/boot:/boot/efi:/tmp:/var/log",
+      "key": "Disk ({mountpoint})",
+      "format": "{size-used} / {size-total} ({size-percentage})"
+    },
+
+    "battery",
+    "poweradapter",
+
+    {
+      "type": "command",
+      "key": "CPU Usage",
+      "text": "top -bn1 | awk '/Cpu\\(s\\)/ {print 100-$8 \"%\"; found=1} END {if (!found) print \"N/A\"}'",
+      "useOutput": "stdout"
+    },
+    {
+      "type": "command",
+      "key": "Public IPv6",
+      "text": "curl -6 -s --max-time 3 https://6.ident.me/",
+      "useOutput": "stdout"
+    },
+    {
+      "type": "command",
+      "key": "Public IPv4",
+      "text": "curl -4 -s --max-time 3 https://4.ident.me/",
+      "useOutput": "stdout"
+    },
+    {
+      "type": "command",
+      "key": "Local IPs (/24)",
+      "text": "echo '' && ip -o -4 addr show | awk 'index($4, \"/24\") {print \"                                        - \"$2 \" : \" $4}'",
+      "useOutput": "stdout",
+      "splitLines": true
+    },
+    {
+      "type": "command",
+      "key": "Local IPs (/32)",
+      "text": "echo '' && ip -o -4 addr show | awk 'index($4, \"/32\") {print \"                                        - \"$2 \" : \" $4}'",
+      "useOutput": "stdout",
+      "splitLines": true
+    },
+    {
+      "type": "command",
+      "key": "Local IPs (/128)",
+      "text": "echo '' && ip -o -6 addr show | awk 'index($4, \"/128\") {print \"                                       -  \"$2 \" : \" $4}'",
+      "useOutput": "stdout",
+      "splitLines": true
+    },
+    {
+      "type": "command",
+      "key": "Users",
+      "text": "who | awk '!seen[$1]++ {if (out) out=out \", \"; out=out $1} END {print out ? out : \"N/A\"}'",
+      "useOutput": "stdout"
+    },
+
+    "locale",
+    "break",
+    "colors"
+  ]
+}
