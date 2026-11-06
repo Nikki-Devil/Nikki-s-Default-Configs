@@ -1,0 +1,10 @@
+## Ignore SSH configs
+*.pub
+*.key
+
+## Ignore logs
+logs
+
+## Keys and env
+*.pem
+.env
