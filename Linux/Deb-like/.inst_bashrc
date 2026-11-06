@@ -1,0 +1,53 @@
+# Do I have to explain it ?
+alias please="sudo "
+
+# Install packages
+definst(){
+   local DO_A_FULL_INSTALL ;
+   read -r -p "Do you want to update, upgrade and install packages? [y/N] : " DO_A_FULL_INSTALL ;
+
+   case "$DO_A_FULL_INSTALL" in
+      [yY]|[yY][eE][sS])
+         please apt update ;
+         please apt full-upgrade -y ;
+         please apt install curl wget sl htop grc git nano sudo iputils-ping dnsutils \
+            traceroute screen open-vm-tools qemu-guest-agent vim fastfetch -y ;
+         curl -OL git.io/ansi ;
+         chmod 755 ansi ;
+         please mv ansi /usr/local/bin/ansi ;
+         definst-hyfetch ;
+         ;;
+      *)
+         echo "Skipping package updates and installation.";
+         definst-conf ;
+         ;;
+   esac
+
+   clear ;
+}
+
+# Install Hyfetch
+definst-hyfetch(){
+   please apt update ;
+   please apt install rustup -y ;
+   please rustup default stable ;
+   please cargo install hyfetch ;
+   please mv /root/.cargo/bin/hyfetch /usr/local/bin/hyfetch ;
+   please chmod 755 /usr/local/bin/hyfetch ;
+   please apt remove rustup -y ;
+   definst-conf ;
+}
+
+# Configs
+definst-conf(){
+   curl https://raw.githubusercontent.com/Nikki-Devil/Nikki-s-Default-Configs/refs/heads/main/Linux/Deb-like/.config/hyfetch.json -fsSL -o ~/.config/hyfetch.json ;
+   please cp ~/.config/hyfetch.json /etc/skel/.config/hyfetch.json ;
+   curl https://raw.githubusercontent.com/Nikki-Devil/Nikki-s-Default-Configs/refs/heads/main/Linux/Deb-like/.config/fastfetch/config.jsonc -fsSL -o ~/.config/fastfetch/config.jsonc ;
+   please cp ~/.config/fastfetch/config.jsonc /etc/skel/.config/fastfetch/config.jsonc ;
+   curl https://raw.githubusercontent.com/Nikki-Devil/Nikki-s-Default-Configs/refs/heads/main/Linux/Deb-like/.bashrc -fsSL -o ~/.bashrc ;
+   please cp ~/.bashrc /etc/skel/.bashrc ;
+   source ~/.bashrc ;
+}
+
+# Deploy
+definst
