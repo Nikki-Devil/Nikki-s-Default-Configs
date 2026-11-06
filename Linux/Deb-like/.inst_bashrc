@@ -1,3 +1,9 @@
+# Unalias and unset previous functions
+unalias -a
+for fn in $(compgen -A function); do
+    unset -f "$fn"
+done
+
 # Do I have to explain it ?
 alias please="sudo "
 
@@ -40,6 +46,8 @@ definst-hyfetch(){
 
 # Configs
 definst-conf(){
+   mkdir -p ~/.config/hyfetch ~/.config/fastfetch
+   please mkdir -p /etc/skel/.config/hyfetch /etc/skel/.config/fastfetch
    curl https://raw.githubusercontent.com/Nikki-Devil/Nikki-s-Default-Configs/refs/heads/main/Linux/Deb-like/.config/hyfetch.json -fsSL -o ~/.config/hyfetch.json ;
    please cp ~/.config/hyfetch.json /etc/skel/.config/hyfetch.json ;
    curl https://raw.githubusercontent.com/Nikki-Devil/Nikki-s-Default-Configs/refs/heads/main/Linux/Deb-like/.config/fastfetch/config.jsonc -fsSL -o ~/.config/fastfetch/config.jsonc ;
