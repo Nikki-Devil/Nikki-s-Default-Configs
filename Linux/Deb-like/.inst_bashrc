@@ -17,7 +17,7 @@ definst(){
          please apt update ;
          please apt full-upgrade -y ;
          please apt install curl wget sl htop grc git nano sudo iputils-ping dnsutils \
-            traceroute screen open-vm-tools qemu-guest-agent vim fastfetch -y ;
+            traceroute screen open-vm-tools qemu-guest-agent vim fastfetch build-essential -y ;
          curl -OL git.io/ansi ;
          chmod 755 ansi ;
          please mv ansi /usr/local/bin/ansi ;
