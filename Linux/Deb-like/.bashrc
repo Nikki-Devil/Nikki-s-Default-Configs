@@ -227,4 +227,4 @@ alias macron="echo 'explosion !'"
 
 # End + Init
 clear
-/bin/hyfetch
+/usr/local/bin/hyfetch
