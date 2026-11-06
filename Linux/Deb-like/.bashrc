@@ -201,7 +201,7 @@ updrc(){
       echo "Already up to date ($BASHRC_V)"
    else
       echo "Updating ($BASHRC_V) --> ($GIT_V)"
-      curl zz -fsSL -o ~/.inst_bashrc
+      curl https://raw.githubusercontent.com/Nikki-Devil/Nikki-s-Default-Configs/refs/heads/main/Linux/Deb-like/.inst_bashrc -fsSL -o ~/.inst_bashrc
       source ~/.inst_bashrc
    fi
 }
